@@ -1,0 +1,102 @@
+import random
+import sys as sus
+from playsound import playsound
+
+commandList = ["h", "q", "n", "r"]
+
+def choosingNote():
+    "Choosing a note for the game"
+    notes = ["a", "b", "c", "d", "e", "f", "g"]
+    choice = random.choice(notes)
+    print("Choosing note...")
+    return choice
+
+def guessGame(choiceNote):
+    "Main game, takes command input aswell"
+    
+    guess = input("Please guess the note that you heard, or 'H' for help: ").lower()
+
+    if guess != choiceNote and guess in commandList:
+        commands(guess)
+    elif guess == choiceNote:
+        playsound('success.mp3')
+        print(f"Well done! You got it right, the note was {choiceNote.upper()}!")
+        renew = input("Do you want to play again or quit? \nType 'N' to play again or 'Q' to quit: ").lower()
+        if renew == "q":
+            quit()
+        elif renew == "n":
+            newGame()    
+    else:
+        while (guess != choiceNote) and guess not in commandList:
+            guess = input("Wrong! Please try again to guess the note that you heard, or 'H' for help: ").lower()
+        if guess != choiceNote and guess in commandList:
+            commands(guess)
+        elif guess == choiceNote:
+            playsound('success.mp3')
+            print(f"Well done! You got it right, the note was {choiceNote.upper()}!")
+            renew = input("Do you want to play again or quit? \nType 'N' to play again or 'Q' to quit: ").lower()
+            if renew == "q":
+                quit()
+            elif renew == "n":
+                newGame()
+            else:
+                print("ERROR! Command not recognized. Initiating self-destruction...")
+
+def playNote(choice):
+    "Plays the note thats choosen"
+    playsound(f'noter/{choice}.mp3')
+    guessGame(choice)
+
+def quit():
+    "Terminates program when called"
+    sus.exit("Thanks for playing!")
+
+def newGame():
+    "Starts a new game, with new note"
+    choiceNote = choosingNote()
+    playsound(f'noter/{choiceNote}.mp3')
+    guessGame(choiceNote)
+
+def help():
+    "Shows available commands, and functions"
+    print("The available commands are as following:\n'Q' = Quits the program\n'N' = Start a new game with a new note\n'R' = Replays the note again")
+    guessGame(choiceNote)
+
+def replay(choiceNote):
+    "Replays the note again for the user"
+    print("Playing note again...")
+    playNote(choiceNote)
+    guessGame(choiceNote)
+
+def commands(choice):
+    "Selects command based on the user input"
+    if choice == "q":
+        sure = input("Are you sure you want to start a new game? Y/N: ").lower()
+        if sure == ("y" or "yes"):
+            quit()
+        elif sure == ("n" or "no"):
+            print("Returning to previous game...")
+            guessGame(choiceNote)
+        else:
+            print("Something went wrong, make sure you put the correct allowed letter.")
+            commands(choice)
+    elif choice == "h":
+        help()
+    elif choice == "n":
+        sure = input("Are you sure you want to start a new game? Y/N: ").lower()
+        if sure == ("y" or "yes"):
+            newGame()
+        elif sure == ("n" or "no"):
+            print("Returning to previous game...")
+            guessGame(choiceNote)
+        else:
+            print("Something went wrong, make sure you put the correct allowed letter.")
+            commands(choice)
+    elif choice == "r":
+        replay(choiceNote)
+
+print("Welcome to the game! A note will be choosen at random, and it's your job to figure out which.")
+choiceNote = choosingNote()
+print("Playing note...")
+playsound(f'noter/{choiceNote}.mp3')
+guessGame(choiceNote)
