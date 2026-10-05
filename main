@@ -44,7 +44,7 @@ def guessGame(choiceNote):
 
 def playNote(choice):
     "Plays the note thats choosen"
-    playsound(f'noter/{choice}.mp3')
+    playsound(f'notes/{choice}.mp3')
     guessGame(choice)
 
 def quit():
@@ -54,7 +54,7 @@ def quit():
 def newGame():
     "Starts a new game, with new note"
     choiceNote = choosingNote()
-    playsound(f'noter/{choiceNote}.mp3')
+    playsound(f'notes/{choiceNote}.mp3')
     guessGame(choiceNote)
 
 def help():
@@ -98,5 +98,5 @@ def commands(choice):
 print("Welcome to the game! A note will be choosen at random, and it's your job to figure out which.")
 choiceNote = choosingNote()
 print("Playing note...")
-playsound(f'noter/{choiceNote}.mp3')
+playsound(f'notes/{choiceNote}.mp3')
 guessGame(choiceNote)
