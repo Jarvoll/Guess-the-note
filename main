@@ -71,7 +71,7 @@ def replay(choiceNote):
 def commands(choice):
     "Selects command based on the user input"
     if choice == "q":
-        sure = input("Are you sure you want to start a new game? Y/N: ").lower()
+        sure = input("Are you sure you want to quit? Y/N: ").lower()
         if sure == ("y" or "yes"):
             quit()
         elif sure == ("n" or "no"):
